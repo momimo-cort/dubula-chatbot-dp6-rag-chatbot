@@ -12,7 +12,6 @@ from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_community.vectorstores import Milvus
-from milvus import default_server as milvus_server
 
 class RAG():
     def __init__(self,
@@ -32,7 +31,7 @@ class RAG():
         return ChatOpenAI(model_name=model_name, temperature=temperature)
     
     def __get_docs_list(self, docs_dir: str) -> list:
-        print("Carregando documentos...")
+        print("Loading Documents...")
         loader = DirectoryLoader(docs_dir,
                                  recursive=True,
                                  show_progress=True,
@@ -43,26 +42,26 @@ class RAG():
         return docs_list
     
     def __set_retriever(self, k: int = 4):
-        # Milvus Vector Store
+        # Milvus Vector Store - connect to external Milvus container
         embeddings = OpenAIEmbeddings()
-        milvus_server.start()
+        # Remove milvus_server.start() since we're using external Milvus
         vector_store = Milvus.from_documents(
             self.__docs_list,
             embedding=embeddings,
-            connection_args={"host": os.getenv("MILVUS_HOST"), "port": os.getenv("MILVUS_PORT")},
-            collection_name="personal_documents",
+            connection_args={"host": os.getenv("MILVUS_HOST", "localhost"), "port": os.getenv("MILVUS_PORT", "19530")},
+            collection_name="training_documents",
         )
 
         # Self-Querying Retriever
         metadata_field_info = [
             AttributeInfo(
                 name="source",
-                description="O caminho de diretórios onde se encontra o documento",
+                description="The directory path where the document is located",
                 type="string",
             ),
         ]
 
-        document_content_description = "Documentos pessoais"
+        document_content_description = "Restaurant training documents containing information about various restaurants, their menus, and other relevant details."
 
         _retriever = SelfQueryRetriever.from_llm(
             self.__model,
@@ -80,8 +79,35 @@ class RAG():
 
     # PUBLIC METHODS #
     def ask(self, question: str) -> str:
+        prompt_string = '''
+You are DUBULA, an AI assistant specialized in restaurant service training and hospitality industry guidance. Your role is to provide accurate, practical advice to restaurant servers, waitstaff, and hospitality professionals based on comprehensive training materials from established restaurants and hospitality training programs.
+
+When answering questions, you should:
+
+    1. **Provide specific, actionable guidance** - Give clear steps and procedures that can be immediately implemented
+    2. **Reference industry best practices** - Draw from the training standards outlined in professional service manuals
+    3. **Maintain professional tone** - Use language appropriate for hospitality training while being accessible
+    4. **Consider guest experience** - Always frame advice in terms of improving customer satisfaction and service quality
+    5. **Include safety and hygiene considerations** - Emphasize food safety, cleanliness, and proper handling procedures when relevant
+    6. **Offer practical examples** - When possible, provide specific scenarios or examples to illustrate points
+
+    Your knowledge base includes training materials covering:
+    - Guest service and hospitality fundamentals
+    - Food and beverage service procedures
+    - Table service techniques and etiquette
+    - Menu knowledge and suggestive selling
+    - Wine service and beverage preparation
+    - Personal hygiene and professional appearance
+    - Safety protocols and sanitation procedures
+    - Complaint handling and customer relations
+    - Restaurant operations and teamwork
+
+    Answer the user's question based on the following context documents, ensuring your response is detailed enough to be helpful while remaining concise and practical for real-world application:
+
+    {context}
+'''
         prompt = ChatPromptTemplate.from_messages([
-            ("system", "Você é um assistente responsável por responder perguntas sobre documentos. Responda a pergunta do usuário com um nível de detalhes razoável e baseando-se no(s) seguinte(s) documento(s) de contexto:\n\n{context}"),
+            ("system", prompt_string),
             MessagesPlaceholder(variable_name="chat_history"),
             ("user", "{input}"),
         ])

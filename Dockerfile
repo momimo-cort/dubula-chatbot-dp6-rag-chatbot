@@ -15,7 +15,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY . .
+COPY src/ src/
+COPY docs/ docs/
 
 # Create directory for documents if it doesn't exist
 RUN mkdir -p docs/manuals
@@ -28,4 +29,4 @@ ENV PYTHONUNBUFFERED=1
 EXPOSE 8000
 
 # Default command
-CMD ["python", "main.py"]
+CMD ["python", "src/main.py"]
