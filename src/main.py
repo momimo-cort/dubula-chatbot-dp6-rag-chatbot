@@ -1,7 +1,7 @@
 from model import RAG
 
 rag = RAG(
-    docs_dir='docs', # Nome do diretório onde estão os documentos
+    docs_dir='../docs', # Nome do diretório onde estão os documentos
     n_retrievals=1, # Número de documentos retornados pela busca (int)  :   default=4
     chat_max_tokens=3097, # Número máximo de tokens que podem ser usados na memória do chat (int)  :   default=3097
     creativeness=1.2, # Quão criativa será a resposta (float 0-2)  :   default=0.7
