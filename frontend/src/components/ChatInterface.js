@@ -6,7 +6,7 @@ const ChatInterface = () => {
   const [messages, setMessages] = useState([
     {
       type: 'bot',
-      content: 'Hello! I\'m your restaurant training assistant. Ask me anything about customer service, food handling, table setup, or any other restaurant operations.',
+      content: 'Hello! I\'m Dubula, your restaurant training assistant. Ask me anything about customer service, food handling, table setup, or any other restaurant operations.',
       timestamp: new Date()
     }
   ]);
@@ -37,7 +37,11 @@ const ChatInterface = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8000/chat', {
+      // Use relative URL which will be handled by the nginx reverse proxy
+      const apiUrl = '/api/chat';
+      console.log('Connecting to API at:', apiUrl);
+      
+      const response = await axios.post(apiUrl, {
         question: inputValue
       });
 

@@ -4,7 +4,8 @@ from model import RAG
 import os
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend
+# Enable CORS for all domains with more permissive settings
+CORS(app, resources={r"/*": {"origins": "*", "allow_headers": "*", "expose_headers": "*"}})
 
 # Initialize RAG system
 rag = RAG(

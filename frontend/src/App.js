@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Restaurant Training Chatbot</h1>
+        <h1>Dubula - Restaurant Training Assistant</h1>
         <p>Ask questions about restaurant service, food handling, and customer service</p>
       </header>
       <main>
