@@ -1,0 +1,62 @@
+FROM nvidia/cuda:12.1-devel-ubuntu22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV CUDA_VISIBLE_DEVICES=0
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-dev \
+    git \
+    wget \
+    curl \
+    ffmpeg \
+    libsndfile1 \
+    libsndfile1-dev \
+    espeak-ng \
+    espeak-ng-data \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set Python3 as default python
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install PyTorch with CUDA support
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# Install TTS and dependencies
+RUN pip install TTS==0.22.0 \
+    flask==3.0.0 \
+    flask-cors==4.0.0 \
+    numpy \
+    scipy \
+    librosa \
+    soundfile \
+    pydub
+
+# Create working directory
+WORKDIR /app
+
+# Create cache directory
+RUN mkdir -p /tmp/tts_cache
+
+# Copy TTS service
+COPY tts_service.py .
+
+# Download TTS models (this will cache them in the container)
+RUN python -c "from TTS.api import TTS; TTS('tts_models/multilingual/multi-dataset/xtts_v2')"
+
+# Expose port
+EXPOSE 8001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=30s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8001/health || exit 1
+
+# Start TTS service
+CMD ["python", "tts_service.py"]
