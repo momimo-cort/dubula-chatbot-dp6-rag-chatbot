@@ -29,8 +29,8 @@ class TTSService:
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         logger.info(f"Initializing TTS service on device: {self.device}")
         
-        # Initialize Coqui TTS with multilingual model
-        self.tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(self.device)
+        # Initialize Coqui TTS with glow-tts model (no license prompt)
+        self.tts = TTS("tts_models/en/ljspeech/glow-tts").to(self.device)
         
         # Available voices/accents configuration
         self.voice_configs = {

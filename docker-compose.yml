@@ -109,7 +109,7 @@ services:
     build:
       context: ./speech_services
       dockerfile: Dockerfile.tts
-    container_name: dubula-tts
+    container_name: tts-service
     depends_on:
       - speech-base
     deploy:
@@ -126,6 +126,7 @@ services:
       - "8001:8001"
     volumes:
       - tts_cache:/tmp/tts_cache
+      - ./speech_services:/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
@@ -139,7 +140,7 @@ services:
     build:
       context: ./speech_services
       dockerfile: Dockerfile.stt
-    container_name: dubula-stt
+    container_name: stt-service
     depends_on:
       - speech-base
     deploy:
@@ -152,10 +153,12 @@ services:
     environment:
       - CUDA_VISIBLE_DEVICES=0
       - NVIDIA_VISIBLE_DEVICES=all
+      - LD_LIBRARY_PATH=/opt/conda/lib/python3.11/site-packages/nvidia/cudnn/lib
     ports:
       - "8002:8002"
     volumes:
       - stt_cache:/tmp/stt_cache
+      - ./speech_services:/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
@@ -165,17 +168,22 @@ services:
       retries: 3
 
   nginx:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
     container_name: rag-nginx
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
-      - frontend
-      - rag-chatbot
-      - tts-service
-      - stt-service
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      frontend:
+        condition: service_started
+      rag-chatbot:
+        condition: service_started
+      tts-service:
+        condition: service_healthy
+      stt-service:
+        condition: service_healthy
     restart: always
 
 volumes:

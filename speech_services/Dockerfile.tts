@@ -8,7 +8,7 @@ RUN pip install TTS==0.22.0
 COPY tts_service.py .
 
 # Download TTS models (this will cache them in the container)
-RUN python -c "from TTS.api import TTS; TTS('tts_models/multilingual/multi-dataset/xtts_v2')"
+RUN python -c "from TTS.api import TTS; TTS('tts_models/en/ljspeech/glow-tts')"
 
 # Expose port
 EXPOSE 8001

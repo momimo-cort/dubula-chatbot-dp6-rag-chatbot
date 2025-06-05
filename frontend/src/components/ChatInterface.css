@@ -167,3 +167,47 @@
 .chat-messages::-webkit-scrollbar-thumb:hover {
   background: #adb5bd;
 }
+
+/* Voice Status Styling */
+.voice-status {
+  padding: 10px 20px;
+  background: #f1f3f4;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.status-indicator {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.status-indicator.listening {
+  background: #d4edda;
+  color: #155724;
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.speaking {
+  background: #cce7ff;
+  color: #004085;
+  animation: speak 1s infinite;
+}
+
+.status-indicator:not(.listening):not(.speaking) {
+  background: #f8f9fa;
+  color: #6c757d;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes speak {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
