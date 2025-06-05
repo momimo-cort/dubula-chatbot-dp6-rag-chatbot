@@ -1,0 +1,41 @@
+FROM pytorch/pytorch:2.1.0-cuda11.8-devel-ubuntu22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV CUDA_VISIBLE_DEVICES=0
+
+# Install system dependencies for speech processing
+RUN apt-get update && apt-get install -y \
+    git \
+    wget \
+    curl \
+    ffmpeg \
+    libsndfile1 \
+    libsndfile1-dev \
+    espeak-ng \
+    espeak-ng-data \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install common speech processing dependencies
+RUN pip install \
+    flask==3.0.0 \
+    flask-cors==4.0.0 \
+    numpy \
+    scipy \
+    librosa \
+    soundfile \
+    pydub
+
+# Create working directory
+WORKDIR /app
+
+# Create cache directories
+RUN mkdir -p /tmp/tts_cache /tmp/stt_cache
+
+# Base image is ready for inheritance
+CMD ["echo", "Base speech services image ready"]

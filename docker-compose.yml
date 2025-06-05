@@ -95,12 +95,23 @@ services:
       - rag-chatbot
       
   # Add nginx reverse proxy to handle API requests
+  # Base speech services image
+  speech-base:
+    build:
+      context: ./speech_services
+      dockerfile: Dockerfile.base
+    image: dubula-speech-base:latest
+    container_name: dubula-speech-base
+    command: ["echo", "Base image built"]
+
   # Text-to-Speech Service with GPU acceleration
   tts-service:
     build:
       context: ./speech_services
       dockerfile: Dockerfile.tts
     container_name: dubula-tts
+    depends_on:
+      - speech-base
     deploy:
       resources:
         reservations:
@@ -129,6 +140,8 @@ services:
       context: ./speech_services
       dockerfile: Dockerfile.stt
     container_name: dubula-stt
+    depends_on:
+      - speech-base
     deploy:
       resources:
         reservations:
