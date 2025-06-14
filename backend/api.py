@@ -15,11 +15,11 @@ rag = RAG(
     creativeness=1.2,
 )
 
-@app.route('/health', methods=['GET'])
+@app.route('/api/health', methods=['GET'])
 def health():
     return jsonify({"status": "healthy"})
 
-@app.route('/chat', methods=['POST'])
+@app.route('/api/chat', methods=['POST'])
 def chat():
     try:
         data = request.json
