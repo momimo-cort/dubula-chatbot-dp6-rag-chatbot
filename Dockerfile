@@ -17,6 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY backend/ backend/
 COPY docs/ docs/
+COPY config/ config/
 
 # Create directory for documents if it doesn't exist
 RUN mkdir -p docs/manuals

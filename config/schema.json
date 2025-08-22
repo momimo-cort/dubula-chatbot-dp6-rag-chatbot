@@ -1,0 +1,325 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RAG Chatbot Client Configuration",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique client identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Client display name"
+        },
+        "industry": {
+          "type": "string",
+          "enum": ["restaurant", "healthcare", "retail", "education", "finance", "manufacturing", "other"]
+        }
+      },
+      "required": ["id", "name", "industry"]
+    },
+    "branding": {
+      "type": "object",
+      "properties": {
+        "appName": {
+          "type": "string",
+          "description": "Application name displayed in header"
+        },
+        "tagline": {
+          "type": "string",
+          "description": "Subtitle/description shown below app name"
+        },
+        "botName": {
+          "type": "string",
+          "description": "Name of the chatbot assistant"
+        },
+        "logo": {
+          "type": "object",
+          "properties": {
+            "primary": {
+              "type": "string",
+              "description": "Main logo URL or path"
+            },
+            "favicon": {
+              "type": "string",
+              "description": "Favicon URL or path"
+            },
+            "width": {
+              "type": "number",
+              "description": "Logo width in pixels"
+            },
+            "height": {
+              "type": "number",
+              "description": "Logo height in pixels"
+            }
+          }
+        }
+      },
+      "required": ["appName"]
+    },
+    "theme": {
+      "type": "object",
+      "properties": {
+        "colors": {
+          "type": "object",
+          "properties": {
+            "primary": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Primary brand color"
+            },
+            "secondary": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Secondary brand color"
+            },
+            "accent": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Accent color for highlights"
+            },
+            "background": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Main background color"
+            },
+            "surface": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Card/surface background color"
+            },
+            "text": {
+              "type": "object",
+              "properties": {
+                "primary": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$",
+                  "description": "Primary text color"
+                },
+                "secondary": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$",
+                  "description": "Secondary text color"
+                },
+                "muted": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$",
+                  "description": "Muted/disabled text color"
+                }
+              }
+            }
+          },
+          "required": ["primary", "background"]
+        },
+        "typography": {
+          "type": "object",
+          "properties": {
+            "fontFamily": {
+              "type": "object",
+              "properties": {
+                "primary": {
+                  "type": "string",
+                  "description": "Primary font family for body text"
+                },
+                "heading": {
+                  "type": "string",
+                  "description": "Font family for headings"
+                },
+                "monospace": {
+                  "type": "string",
+                  "description": "Monospace font for code/technical text"
+                }
+              }
+            },
+            "fontSize": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "string",
+                  "description": "Base font size (e.g., '16px', '1rem')"
+                },
+                "small": {
+                  "type": "string",
+                  "description": "Small text size"
+                },
+                "large": {
+                  "type": "string",
+                  "description": "Large text size"
+                }
+              }
+            }
+          }
+        },
+        "borderRadius": {
+          "type": "string",
+          "description": "Default border radius for components"
+        },
+        "spacing": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "type": "number",
+              "description": "Base spacing unit in pixels"
+            }
+          }
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "layout": {
+          "type": "object",
+          "properties": {
+            "maxWidth": {
+              "type": "string",
+              "description": "Maximum content width"
+            },
+            "headerHeight": {
+              "type": "string",
+              "description": "Header height"
+            },
+            "sidebarWidth": {
+              "type": "string",
+              "description": "Sidebar width if applicable"
+            }
+          }
+        },
+        "chat": {
+          "type": "object",
+          "properties": {
+            "welcomeMessage": {
+              "type": "string",
+              "description": "Initial message shown to users"
+            },
+            "placeholder": {
+              "type": "string",
+              "description": "Input placeholder text"
+            },
+            "maxHeight": {
+              "type": "string",
+              "description": "Maximum chat container height"
+            },
+            "showTimestamps": {
+              "type": "boolean",
+              "description": "Whether to show message timestamps"
+            },
+            "showTypingIndicator": {
+              "type": "boolean",
+              "description": "Whether to show typing indicator"
+            },
+            "allowFileUploads": {
+              "type": "boolean",
+              "description": "Whether users can upload files"
+            }
+          }
+        },
+        "animations": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Whether to enable animations"
+            },
+            "duration": {
+              "type": "string",
+              "description": "Default animation duration"
+            },
+            "easing": {
+              "type": "string",
+              "description": "Default easing function"
+            }
+          }
+        }
+      }
+    },
+    "assistant": {
+      "type": "object",
+      "properties": {
+        "personality": {
+          "type": "object",
+          "properties": {
+            "tone": {
+              "type": "string",
+              "enum": ["professional", "friendly", "casual", "formal", "enthusiastic", "helpful", "expert"],
+              "description": "Overall tone of the assistant"
+            },
+            "style": {
+              "type": "string",
+              "enum": ["concise", "detailed", "conversational", "technical", "educational", "supportive"],
+              "description": "Communication style"
+            },
+            "formality": {
+              "type": "string",
+              "enum": ["very_formal", "formal", "balanced", "informal", "very_informal"],
+              "description": "Level of formality in responses"
+            }
+          }
+        },
+        "brandVoice": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "Description of the brand voice and personality"
+            },
+            "keyTraits": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Key personality traits (e.g., 'knowledgeable', 'approachable', 'confident')"
+            },
+            "dosList": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Things the assistant should do"
+            },
+            "dontsList": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Things the assistant should avoid"
+            },
+            "samplePhrases": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Example phrases that reflect the brand voice"
+            }
+          }
+        },
+        "responseSettings": {
+          "type": "object",
+          "properties": {
+            "maxLength": {
+              "type": "string",
+              "enum": ["short", "medium", "long", "comprehensive"],
+              "description": "Preferred response length"
+            },
+            "includeExamples": {
+              "type": "boolean",
+              "description": "Whether to include examples in responses"
+            },
+            "useEmojis": {
+              "type": "boolean", 
+              "description": "Whether to use emojis in responses"
+            },
+            "askFollowUpQuestions": {
+              "type": "boolean",
+              "description": "Whether to ask follow-up questions"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": ["client", "branding", "theme"]
+}

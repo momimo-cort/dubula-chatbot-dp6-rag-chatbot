@@ -1,0 +1,295 @@
+/* CSS Custom Properties for Dynamic Theming */
+:root {
+  /* Default fallback values - will be overridden by ThemeContext */
+  
+  /* Colors */
+  --color-primary: #8B4513;
+  --color-secondary: #DAA520;
+  --color-accent: #FF6347;
+  --color-background: #FFF8DC;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #2C1810;
+  --color-text-secondary: #5D4E37;
+  --color-text-muted: #8B7355;
+  
+  /* Typography */
+  --font-family-primary: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-heading: "Playfair Display", Georgia, serif;
+  --font-family-monospace: Monaco, "Cascadia Code", Consolas, monospace;
+  --font-size-base: 16px;
+  --font-size-small: 14px;
+  --font-size-large: 18px;
+  
+  /* Layout */
+  --border-radius: 8px;
+  --spacing-unit: 8px;
+  --layout-max-width: 1200px;
+  --layout-header-height: 80px;
+  --layout-sidebar-width: 300px;
+  
+  /* Chat */
+  --chat-max-height: 600px;
+  
+  /* Animations */
+  --animation-duration: 0.2s;
+  --animation-easing: ease-in-out;
+  
+  /* Derived colors for consistency */
+  --color-primary-light: color-mix(in srgb, var(--color-primary) 80%, white);
+  --color-primary-dark: color-mix(in srgb, var(--color-primary) 80%, black);
+  --color-surface-elevated: color-mix(in srgb, var(--color-surface) 95%, var(--color-text-primary));
+  --color-border: color-mix(in srgb, var(--color-text-muted) 20%, transparent);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Base styles using CSS custom properties */
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  transition: background-color var(--animation-duration) var(--animation-easing);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  color: var(--color-text-primary);
+  margin: 0 0 calc(var(--spacing-unit) * 2) 0;
+}
+
+/* Utility classes for theming */
+.theme-primary {
+  color: var(--color-primary);
+}
+
+.theme-secondary {
+  color: var(--color-secondary);
+}
+
+.theme-accent {
+  color: var(--color-accent);
+}
+
+.theme-bg-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.theme-bg-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.theme-bg-surface {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.theme-border {
+  border: 1px solid var(--color-border);
+}
+
+.theme-border-radius {
+  border-radius: var(--border-radius);
+}
+
+.theme-shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.theme-shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Spacing utilities */
+.theme-spacing {
+  --spacing: var(--spacing-unit);
+}
+
+.theme-spacing-2x {
+  --spacing: calc(var(--spacing-unit) * 2);
+}
+
+.theme-spacing-3x {
+  --spacing: calc(var(--spacing-unit) * 3);
+}
+
+.theme-spacing-4x {
+  --spacing: calc(var(--spacing-unit) * 4);
+}
+
+/* Layout utilities */
+.theme-container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-unit);
+}
+
+/* Animation utilities */
+.theme-transition {
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.theme-transition-colors {
+  transition: background-color var(--animation-duration) var(--animation-easing),
+              border-color var(--animation-duration) var(--animation-easing),
+              color var(--animation-duration) var(--animation-easing);
+}
+
+/* Button theming */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Input theming */
+.input-themed {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 1.5);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-base);
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.input-themed:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+/* Card theming */
+.card-themed {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 3);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.card-themed:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Loading and error states */
+.theme-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: var(--color-text-secondary);
+}
+
+.loading-spinner {
+  font-size: var(--font-size-large);
+  animation: pulse 2s infinite;
+}
+
+.theme-error {
+  background-color: #fee;
+  color: #c53030;
+  padding: calc(var(--spacing-unit) * 3);
+  border-radius: var(--border-radius);
+  border: 1px solid #feb2b2;
+  text-align: center;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #1a1a1a;
+    --color-surface: #2d2d2d;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #cccccc;
+    --color-text-muted: #999999;
+    --color-border: #444444;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: var(--color-text-primary);
+    --shadow-sm: 0 2px 4px 0 rgb(0 0 0 / 0.3);
+    --shadow-md: 0 6px 12px -2px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 20px 30px -6px rgb(0 0 0 / 0.3);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animation-duration: 0ms;
+  }
+  
+  * {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}

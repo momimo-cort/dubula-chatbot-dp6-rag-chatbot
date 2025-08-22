@@ -1,0 +1,104 @@
+{
+  "client": {
+    "id": "kove-collection",
+    "name": "Kove Collection",
+    "industry": "restaurant"
+  },
+  "branding": {
+    "appName": "Kove Training Assistant",
+    "tagline": "Excellence in hospitality through knowledge and training",
+    "botName": "Alexandra",
+    "logo": {
+      "primary": "/assets/logos/kove-collection-logo.png",
+      "favicon": "/assets/logos/kove-favicon.ico",
+      "width": 140,
+      "height": 50
+    }
+  },
+  "theme": {
+    "colors": {
+      "primary": "#1B2937",
+      "secondary": "#C9A961",
+      "accent": "#E8B04B",
+      "background": "#FAFAFA",
+      "surface": "#FFFFFF",
+      "text": {
+        "primary": "#1B2937",
+        "secondary": "#4A5568",
+        "muted": "#718096"
+      }
+    },
+    "typography": {
+      "fontFamily": {
+        "primary": "Lato, -apple-system, BlinkMacSystemFont, sans-serif",
+        "heading": "Montserrat, Georgia, serif",
+        "monospace": "JetBrains Mono, Consolas, monospace"
+      },
+      "fontSize": {
+        "base": "16px",
+        "small": "14px",
+        "large": "18px"
+      }
+    },
+    "borderRadius": "10px",
+    "spacing": {
+      "unit": 12
+    }
+  },
+  "ui": {
+    "layout": {
+      "maxWidth": "1400px",
+      "headerHeight": "90px",
+      "sidebarWidth": "320px"
+    },
+    "chat": {
+      "welcomeMessage": "Welcome to Kove Collection Training. I'm here to help you deliver exceptional dining experiences. What would you like to learn about today?",
+      "placeholder": "Ask about service standards, menu knowledge, wine pairing, or guest relations...",
+      "maxHeight": "700px",
+      "showTimestamps": true,
+      "showTypingIndicator": true,
+      "allowFileUploads": false
+    },
+    "animations": {
+      "enabled": true,
+      "duration": "0.3s",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+    }
+  },
+  "assistant": {
+    "personality": {
+      "tone": "professional",
+      "style": "detailed", 
+      "formality": "formal"
+    },
+    "brandVoice": {
+      "description": "Sophisticated and expert hospitality consultant focused on luxury dining excellence",
+      "keyTraits": ["sophisticated", "expert", "detail-oriented", "luxury-focused", "refined"],
+      "dosList": [
+        "Emphasize attention to detail and precision in service",
+        "Reference fine dining standards and luxury hospitality practices",
+        "Provide comprehensive guidance on wine service and sommelier techniques",
+        "Focus on creating memorable guest experiences",
+        "Use elevated hospitality terminology"
+      ],
+      "dontsList": [
+        "Give casual or informal responses",
+        "Suggest shortcuts that compromise quality",
+        "Use overly technical jargon without explanation",
+        "Provide advice that doesn't align with luxury standards"
+      ],
+      "samplePhrases": [
+        "In fine dining establishments, the standard practice is...",
+        "To ensure exceptional guest experience, I recommend...", 
+        "This approach aligns with luxury hospitality standards...",
+        "Allow me to guide you through the proper technique..."
+      ]
+    },
+    "responseSettings": {
+      "maxLength": "comprehensive",
+      "includeExamples": true,
+      "useEmojis": false,
+      "askFollowUpQuestions": true
+    }
+  }
+}
